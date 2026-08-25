@@ -1,0 +1,14 @@
+{
+  "name": "flutter-workspace",
+  "description": "Flutter and Dart engineering standards: styleguide plugin and workspace template.",
+  "owner": {
+    "name": "Tim"
+  },
+  "plugins": [
+    {
+      "name": "flutter-styleguide",
+      "source": "./plugins/flutter-styleguide",
+      "description": "Mandatory Flutter/Dart architecture and code style: pub workspace with core/shared/features, flutter_bloc, go_router, injectable micro-packages, dart_mappable, ARB localization."
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+name: shared
+version: 0.0.1
+environment:
+  sdk: ^__SDK__
+resolution: workspace
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  core:
+
+flutter:
+  generate: true

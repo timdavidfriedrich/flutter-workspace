@@ -1,0 +1,14 @@
+name: feature_home
+version: 0.0.1
+environment:
+  sdk: ^__SDK__
+resolution: workspace
+
+dependencies:
+  flutter:
+    sdk: flutter
+  core:
+  shared:
+
+flutter:
+  generate: false

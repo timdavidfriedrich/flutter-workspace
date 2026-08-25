@@ -1,0 +1,27 @@
+name: __APP_NAME__
+description: __APP_TITLE__
+publish_to: 'none'
+version: 0.1.0+1
+
+environment:
+  sdk: ^__SDK__
+
+workspace:
+  - packages/core
+  - packages/shared
+  - packages/feature_home
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  core:
+  shared:
+  feature_home:
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
