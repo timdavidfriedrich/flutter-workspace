@@ -104,7 +104,7 @@ service_locator.dart  ExternalModule(FeatureScanPackageModule),
 Aborts before writing anything if the feature exists or the DI root was
 restructured. Ends with `fvm flutter analyze`.
 
-## Using the styleguide for LLM generated code
+## Use the LLM styleguide to generate better code
 
 > [!WARNING]
 > Only the Claude Code plugin provides it. `fsg` and curl scaffold projects and
