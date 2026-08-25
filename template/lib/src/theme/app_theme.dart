@@ -18,10 +18,7 @@ abstract final class AppTheme {
   static ThemeData _build(Brightness brightness) {
     final isLight = brightness == Brightness.light;
     return ThemeData(
-      colorScheme: ColorScheme.fromSeed(
-        seedColor: _seedColor,
-        brightness: brightness,
-      ),
+      colorScheme: ColorScheme.fromSeed(seedColor: _seedColor, brightness: brightness),
       extensions: [
         StatusColors(
           success: isLight ? _successLight : _successDark,

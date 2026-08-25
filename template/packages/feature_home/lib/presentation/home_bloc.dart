@@ -14,11 +14,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   final ArticleRepository _articleRepository;
 
-  Future<void> _onStarted(HomeStarted event, Emitter<HomeState> emit) =>
-      _load(emit);
+  Future<void> _onStarted(HomeStarted event, Emitter<HomeState> emit) => _load(emit);
 
-  Future<void> _onRefreshed(HomeRefreshed event, Emitter<HomeState> emit) =>
-      _load(emit);
+  Future<void> _onRefreshed(HomeRefreshed event, Emitter<HomeState> emit) => _load(emit);
 
   Future<void> _load(Emitter<HomeState> emit) async {
     emit(const HomeLoading());

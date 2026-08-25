@@ -1,3 +1,6 @@
+import 'package:feature_home/presentation/article_detail_bloc.dart';
+import 'package:feature_home/presentation/article_detail_event.dart';
+import 'package:feature_home/presentation/article_detail_screen.dart';
 import 'package:feature_home/presentation/home_bloc.dart';
 import 'package:feature_home/presentation/home_event.dart';
 import 'package:feature_home/presentation/home_screen.dart';
@@ -16,6 +19,7 @@ class NavigationRouter {
   late final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
     initialLocation: NavigationRoute.home.path,
+    redirect: (context, state) => state.uri.path == "/" ? NavigationRoute.home.path : null,
     routes: [
       GoRoute(
         path: NavigationRoute.home.path,
@@ -23,6 +27,17 @@ class NavigationRouter {
           create: (_) => sl<HomeBloc>()..add(const HomeStarted()),
           child: const HomeScreen(),
         ),
+        routes: [
+          GoRoute(
+            path: ":$parameterId",
+            builder: (context, state) => BlocProvider(
+              create: (_) =>
+                  sl<ArticleDetailBloc>(param1: state.pathParameters[parameterId])
+                    ..add(const ArticleDetailStarted()),
+              child: const ArticleDetailScreen(),
+            ),
+          ),
+        ],
       ),
     ],
   );

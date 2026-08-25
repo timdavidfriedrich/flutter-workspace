@@ -1,8 +1,8 @@
-const parameterId = ":id";
+const parameterId = "id";
 
 enum NavigationRoute {
   home("/home"),
-  articleDetail("/home/$parameterId");
+  articleDetail("/home/:$parameterId");
 
   const NavigationRoute(this.path);
 

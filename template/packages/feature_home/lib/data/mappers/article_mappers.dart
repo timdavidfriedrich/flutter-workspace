@@ -7,21 +7,13 @@ const _statusUnknown = "unknown";
 
 extension LocalArticleMappers on LocalArticle {
   Article toArticle() {
-    return Article(
-      id: id,
-      title: title,
-      status: status.toArticleStatus(),
-    );
+    return Article(id: id, title: title, status: status.toArticleStatus());
   }
 }
 
 extension ArticleMappers on Article {
   LocalArticle toLocalArticle() {
-    return LocalArticle(
-      id: id,
-      title: title,
-      status: status.value,
-    );
+    return LocalArticle(id: id, title: title, status: status.value);
   }
 }
 

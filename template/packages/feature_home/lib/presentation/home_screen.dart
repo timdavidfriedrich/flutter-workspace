@@ -10,7 +10,9 @@ import 'package:shared/presentation/extensions/app_error_extensions.dart';
 import 'package:shared/presentation/extensions/context_extensions.dart';
 import 'package:shared/presentation/navigation/navigation_extensions.dart';
 
-class const HomeScreen({super.key}) extends StatelessWidget {
+class const HomeScreen({
+  super.key,
+}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,8 +65,7 @@ class const _FailureView({
             Text(_error.toMessage(context), textAlign: TextAlign.center),
             const SizedBox(height: Spacing.m),
             FilledButton(
-              onPressed: () =>
-                  context.read<HomeBloc>().add(const HomeRefreshed()),
+              onPressed: () => context.read<HomeBloc>().add(const HomeRefreshed()),
               child: Text(context.s.tryAgain),
             ),
           ],

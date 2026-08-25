@@ -188,8 +188,9 @@ done
 # --------------------------------------------------------------- 7. sort imports
 # `package:<app>/...` sorts differently for every project name, so the template
 # cannot ship a statically correct order.
-step "sorting imports"
+step "sorting imports and formatting"
 fvm dart fix --apply --code=directives_ordering >/dev/null
+fvm dart format lib packages >/dev/null
 
 # ------------------------------------------------------------------ 8. verify
 step "flutter analyze"

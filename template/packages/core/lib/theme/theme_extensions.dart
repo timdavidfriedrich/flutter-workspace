@@ -3,13 +3,11 @@ import 'package:flutter/material.dart';
 class const StatusColors({
   required final Color success,
   required final Color warning,
-}) extends ThemeExtension<StatusColors> {
+})
+    extends ThemeExtension<StatusColors> {
   @override
   StatusColors copyWith({Color? success, Color? warning}) {
-    return StatusColors(
-      success: success ?? this.success,
-      warning: warning ?? this.warning,
-    );
+    return StatusColors(success: success ?? this.success, warning: warning ?? this.warning);
   }
 
   @override

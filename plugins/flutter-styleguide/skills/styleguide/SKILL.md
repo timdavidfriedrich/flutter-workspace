@@ -41,13 +41,20 @@ Violating these is never acceptable, whatever the task:
 - **Dart 3:** use pattern matching, records, `sealed` classes for states and exhaustive `switch`.
 - **Const-first:** `const` and `final` wherever possible.
 - **Strings:** double quotes (`"..."`), except import statements (`'...'`).
-- **Primary constructors** (Dart 3.13+), always. `const` goes between `class` and the name:
+- **Primary constructors** (Dart 3.13+), always. `const` goes between `class` and the name. One parameter per line with a trailing comma, even when there is only one — `trailing_commas: preserve` keeps that layout:
   ```dart
   class const Task({
     required final String id,
     required final String title,
   });
+
+  class const ArticleRepositoryImpl(
+    final ArticleLocalDataSource _dataSource,
+  ) implements ArticleRepository {
+    ...
+  }
   ```
+  A parameter list that is empty stays on one line: `class const HomeLoading() extends HomeState;`
 - **Private named parameters** declare the field private while the call site keeps the public name — `AvatarBadge(label: "New")` sets the field `_label`. Use them **only when no other file reads those fields**, because a private field is library-private:
   - **Yes** — widgets, Blocs, Cubits, use cases, services, repository and data source implementations. Their constructor values stay inside the declaring file.
   - **No** — entities, `Local*`/`Remote*` models, Bloc/Cubit states. A mapper in another file cannot read `_id`, and `ProfileLoaded(:final name)` does not destructure a private `_name`.

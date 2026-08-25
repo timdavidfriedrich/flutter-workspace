@@ -13,7 +13,9 @@ Future<void> main() async {
   runApp(const App());
 }
 
-class const App({super.key}) extends StatelessWidget {
+class const App({
+  super.key,
+}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
