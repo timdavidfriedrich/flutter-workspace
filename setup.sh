@@ -105,6 +105,18 @@ fvm spawn "$FLUTTER" create \
   --no-pub \
   .
 
+# Predictive back: Flutter 3.47 already uses PredictiveBackPageTransitionsBuilder
+# as the Android default, but the gesture only becomes predictive once the
+# activity opts in via the manifest.
+MANIFEST="android/app/src/main/AndroidManifest.xml"
+if [[ -f "$MANIFEST" ]] && ! grep -q 'enableOnBackInvokedCallback' "$MANIFEST"; then
+  step "enabling the predictive back gesture"
+  perl -0pi -e 's|(<application\b)|$1\n        android:enableOnBackInvokedCallback="true"|' "$MANIFEST"
+  grep -q 'android:enableOnBackInvokedCallback="true"' "$MANIFEST" || {
+    echo "FAILED to enable enableOnBackInvokedCallback in $MANIFEST" >&2; exit 1
+  }
+fi
+
 # ------------------------------------------------------------------ 2. fvm use
 # Must come after create so fvm appends to the Flutter .gitignore.
 step "fvm use $FLUTTER"
