@@ -69,7 +69,7 @@ doctor() {
     local versions
     versions="$(fvm api list 2>/dev/null | grep -oE '"flutterSdkVersion": *"[^"]+"' | sed 's/.*: *"//;s/"//' | paste -sd' ' -)"
     [[ -n "$versions" ]] || versions="$(fvm list 2>/dev/null | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | sort -uV | paste -sd' ' -)"
-    if [[ -n "$versions" ]]; then echo "$versions"; else echo "NONE — run 'fvm install stable'"; ok=1; fi
+    if [[ -n "$versions" ]]; then echo "$versions"; else echo "none cached — fvm fetches on demand"; fi
   fi
   printf '  %-22s ' "scripts reachable"
   if curl -fsSL "$BASE_URL/setup.sh" >/dev/null 2>&1; then echo "yes"; else echo "NO"; ok=1; fi

@@ -24,7 +24,7 @@ Optional, only pass when the user names one:
 |---|---|
 | `--title` | human-readable app title (default: derived from `--name`) |
 | `--platforms` | default `android,ios`; e.g. `android,ios,web` |
-| `--flutter` | FVM version, default `stable`; `fvm list` shows what is installed |
+| `--flutter` | FVM version, default `stable`. FVM fetches it if not cached; `fvm list` shows what is already there |
 | `--log-git-url` / `--log-git-ref` | pull in the `klog` logging package |
 
 ## Run
