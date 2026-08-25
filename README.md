@@ -40,7 +40,7 @@ Three ways, same scripts underneath. Pick one, or mix them.
 | | install |
 |---|---|
 | **curl** | nothing |
-| **`fsg`** | `brew install timdavidfriedrich/tap/fsg` |
+| **[`fsg`](https://github.com/timdavidfriedrich/homebrew-tap#fsg)** | `brew install timdavidfriedrich/tap/fsg` |
 | **Claude Code plugin** | `claude plugin marketplace add timdavidfriedrich/flutter-workspace`<br>`claude plugin install flutter-styleguide@flutter-workspace` |
 
 > [!WARNING]
