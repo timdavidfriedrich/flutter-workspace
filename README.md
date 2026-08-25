@@ -55,3 +55,31 @@ the repo tarball for `--ref` (default `main`) into a temp dir and cleans up afte
 
 The script refuses a non-empty target and ends with `fvm flutter analyze`, so a
 green run means the scaffold compiles.
+
+## Add a feature package
+
+Run the script:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/timdavidfriedrich/flutter-workspace/main/add-feature.sh \
+  | bash -s -- scan
+```
+
+It acts on the current directory; pass `--target <dir>` to point it elsewhere.
+
+Creates `packages/feature_scan/` with its `pubspec.yaml` and DI module, then wires
+it into four lines it does not own:
+
+```text
+pubspec.yaml          - packages/feature_scan       (workspace list)
+pubspec.yaml          feature_scan:                 (app dependency)
+service_locator.dart  import '…/feature_scan_module.module.dart';
+service_locator.dart  ExternalModule(FeatureScanPackageModule),
+```
+
+Unlike `setup.sh`, this edits existing files. Every precondition is checked
+before the first write — the feature must not exist, and `workspace:`,
+`externalPackageModulesBefore: [` and the `ExternalModule` entries must be
+present — so a project whose DI root was restructured aborts with a message
+instead of silently doing nothing. Each insertion is verified afterwards, and the
+run ends with `fvm flutter analyze`.
