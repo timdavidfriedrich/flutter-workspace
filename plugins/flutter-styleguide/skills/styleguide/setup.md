@@ -59,8 +59,8 @@ dependencies:
 
   klog:
     git:
-      url: <klog-git-url>
-      ref: <tag>
+      url: https://github.com/timdavidfriedrich/klog.git
+      ref: v1.0.0
 
 dev_dependencies:
   flutter_test:
@@ -74,7 +74,7 @@ flutter:
   uses-material-design: true
 ```
 
-`klog` is pulled from git, not a workspace member — no folder under `packages/`, no `workspace:` entry. Add it via `fvm flutter pub add klog --git-url=<url> --git-ref=<tag>`.
+`klog` is pulled from git, not a workspace member — no folder under `packages/`, no `workspace:` entry. Add it via `fvm flutter pub add klog --git-url=https://github.com/timdavidfriedrich/klog.git --git-ref=<tag>`.
 
 ## 4. Member `pubspec.yaml`
 ```yaml

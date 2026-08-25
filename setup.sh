@@ -5,7 +5,7 @@
 set -euo pipefail
 
 # Repo that hosts template/. Change this one line when you fork.
-REPO="${FLUTTER_TEMPLATE_REPO:-CHANGE-ME/flutter-workspace}"
+REPO="${FLUTTER_TEMPLATE_REPO:-timdavidfriedrich/flutter-workspace}"
 REF="main"
 
 NAME=""
@@ -114,6 +114,12 @@ grep -qE '^/?build/$' .gitignore && grep -qE '^\.dart_tool/$' .gitignore &&
   grep -qE '^\.fvm/$' .gitignore || {
   echo "ERROR: .gitignore incomplete — 'flutter create' must run before 'fvm use'" >&2
   exit 1
+}
+
+# Flutter anchors its build/ pattern at the repo root, so build_runner output
+# under packages/*/build/ would be committed.
+grep -qxF 'packages/*/build/' .gitignore || {
+  printf '\n# Codegen output in workspace members\npackages/*/build/\n' >> .gitignore
 }
 
 SDK="$(fvm dart --version 2>&1 | sed -n 's/.*Dart SDK version: \([0-9.]*\).*/\1/p')"
