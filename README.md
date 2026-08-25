@@ -1,104 +1,129 @@
 # flutter-workspace
 
-Claude Code plugin plus project template for Flutter workspaces:
-`core` ← `shared` ← `features` ← app package, `flutter_bloc`, `go_router`,
-`get_it`/`injectable` micro-packages, `dart_mappable`, ARB localization.
+Scaffolding and styleguide for Flutter pub-workspace projects.
 
+## What it does
 
-## On a new machine
+Generates a workspace and keeps it wired as it grows:
 
-Install FVM and a Flutter SDK — that part cannot come from a repo. Everything
-else is one command:
-
-```bash
-claude plugin marketplace add timdavidfriedrich/flutter-workspace
-claude plugin install flutter-styleguide@flutter-workspace
+```text
+lib/                     app package: main.dart, DI root, router, theme
+packages/core/           AppResult, AppError, Spacing, ThemeExtension, Dio, build config
+packages/shared/         ContextExtensions, ARB (en/de), NavigationRoute, entities
+packages/feature_home/   example slice: DTO → mapper → data source → repository → Bloc → screen
 ```
 
-That installs three skills:
+Stack: `flutter_bloc`, `go_router`, `get_it`/`injectable` micro-packages,
+`dart_mappable`, `dio`, [`klog`](https://github.com/timdavidfriedrich/klog). No
+dependency version is written by hand. Every one is installed with `pub add`.
+
+It does **not** generate feature logic, screens or models; that is what the
+styleguide is for. It does not install FVM or Flutter either.
+
+`feature_home` is an example. To drop it, delete the package and its references in
+`pubspec.yaml`, `lib/src/di/service_locator.dart`,
+`lib/src/navigation/navigation_router.dart`, the `Article` entity plus
+`articleDetail`/`pushArticleDetail` in `shared`, and the `home*` ARB keys.
+
+## Prerequisites
+
+```bash
+brew install leoafarias/fvm/fvm
+```
+
+FVM fetches the Flutter SDK on demand. Nothing else lives on your machine.
+
+## Installation
+
+Three ways, same scripts underneath. Pick one, or mix them.
+
+| | install |
+|---|---|
+| **curl** | nothing |
+| **`fsg`** | `brew install timdavidfriedrich/tap/fsg` |
+| **Claude Code plugin** | `claude plugin marketplace add timdavidfriedrich/flutter-workspace`<br>`claude plugin install flutter-styleguide@flutter-workspace` |
+
+> [!WARNING]
+> Only the Claude Code plugin adds the styleguide. Scaffolding works either way,
+> but with curl or `fsg` alone your generated code follows no rules.
+
+## Create a project
+
+```bash
+fsg create --name my_app --org com.example --target ~/Code/my_app
+
+# or
+curl -fsSL https://raw.githubusercontent.com/timdavidfriedrich/flutter-workspace/main/setup.sh \
+  | bash -s -- --name my_app --org com.example --target ~/Code/my_app
+
+# or, in Claude Code — asks for anything you leave out
+/flutter-styleguide:new-project
+```
 
 | | |
 |---|---|
-| `/flutter-styleguide:new-project` | scaffold a project, wraps `setup.sh` |
-| `/flutter-styleguide:add-feature <name>` | add a feature package, wraps `add-feature.sh` |
-| `/flutter-styleguide:styleguide` | the coding rules — Claude loads this on its own whenever a task touches Dart |
-
-A session then looks like this:
-
-```text
-/flutter-styleguide:new-project          → asks for name, org and target, then scaffolds
-"build me a settings screen"             → styleguide loads itself, code follows it
-/flutter-styleguide:add-feature scan     → creates and wires packages/feature_scan
-"add a barcode scanner to feature_scan"  → same rules apply
-```
-
-The scaffolded project ships a `CLAUDE.md` naming the styleguide skill, so the
-trigger inside a project is deterministic rather than model-judged. Nothing else
-lives on the machine: the two scripts and the template are fetched from this repo
-at run time.
-
-Update everything later with `claude plugin marketplace update`. If you had the
-skill installed standalone under `~/.claude/skills/flutter-styleguide/`, delete it
-after installing the plugin — plugin skills are namespaced, so both would show up.
-
-## Scaffold a project
-
-Straight from the web, nothing checked out locally:
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/timdavidfriedrich/flutter-workspace/main/setup.sh \
-  | bash -s -- --name my_app --org com.example --title "My App" \
-               --platforms android,ios --flutter 3.47.0 --target ~/Code/my_app
-```
-
-Or, if you prefer to read the script before running it:
-
-```bash
-curl -fsSLO https://raw.githubusercontent.com/timdavidfriedrich/flutter-workspace/main/setup.sh
-less setup.sh && bash setup.sh --name my_app --org com.example --target ~/Code/my_app
-```
-
-From a checkout, `setup.sh` uses the adjacent `template/`; otherwise it fetches
-the repo tarball for `--ref` (default `main`) into a temp dir and cleans up after.
-
-| Option | |
-|---|---|
-| `--name` | Dart package name, `snake_case` (required) |
-| `--org` | reverse-DNS org for bundle ids (required) |
-| `--title` | human-readable title (default: derived from `--name`) |
-| `--platforms` | `flutter create --platforms` (default: `android,ios`) |
-| `--flutter` | FVM Flutter version (default: `stable`) |
-| `--ref` | template revision to fetch (default: `main`) |
+| `--name` | package name, `snake_case` — required |
+| `--org` | reverse-DNS org for bundle ids — required |
+| `--target` | must be empty — default: current directory |
+| `--title` | default: derived from `--name` |
+| `--platforms` | default: `android,ios` |
+| `--flutter` | FVM version — default: `stable` |
+| `--ref` | template revision — default: `main` |
 | `--log-git-url` / `--log-git-ref` | pull in `klog` |
-| `--target` | target directory, must be empty (default: current) |
 
-The script refuses a non-empty target and ends with `fvm flutter analyze`, so a
-green run means the scaffold compiles.
+Ends with `fvm flutter analyze`; green means the scaffold compiles. Then:
+
+```bash
+cd ~/Code/my_app && fvm flutter run
+```
 
 ## Add a feature package
 
-Run the script:
+Run from the workspace root, or pass `--target <dir>`.
 
 ```bash
+fsg add-feature scan
+
+# or
 curl -fsSL https://raw.githubusercontent.com/timdavidfriedrich/flutter-workspace/main/add-feature.sh \
   | bash -s -- scan
+
+# or
+/flutter-styleguide:add-feature scan
 ```
 
-It acts on the current directory; pass `--target <dir>` to point it elsewhere.
-
-Creates `packages/feature_scan/` with its `pubspec.yaml` and DI module, then wires
-it into four lines it does not own:
+Creates `packages/feature_scan/` and wires the four lines it does not own:
 
 ```text
-pubspec.yaml          - packages/feature_scan       (workspace list)
-pubspec.yaml          feature_scan:                 (app dependency)
+pubspec.yaml          - packages/feature_scan
+pubspec.yaml          feature_scan:
 service_locator.dart  import '…/feature_scan_module.module.dart';
 service_locator.dart  ExternalModule(FeatureScanPackageModule),
 ```
 
-Unlike `setup.sh`, this edits existing files. Every precondition is checked
-before the first write — the feature must not exist, and `workspace:`,
-`externalPackageModulesBefore: [` and the `ExternalModule` entries must be
-present — so a project whose DI root was restructured aborts with a message
-instead of silently doing nothing. Each insertion is verified afterwards, and the
-run ends with `fvm flutter analyze`.
+Aborts before writing anything if the feature exists or the DI root was
+restructured. Ends with `fvm flutter analyze`.
+
+## Using the styleguide for LLM generated code
+
+> [!WARNING]
+> Only the Claude Code plugin provides it. `fsg` and curl scaffold projects and
+> nothing else.
+
+With the plugin installed, Claude should reach for the styleguide on its own when you ask for a screen, a Bloc, a repository or anything else in Dart. That is a model judgment, so to be sure you can force it with:
+```bash
+/flutter-styleguide:styleguide
+```
+The command is also handy for reviewing existing code.
+
+In a project created with this tool, a `CLAUDE.md` instructs Claude to use it as well. To apply the rules to a project you did not scaffold, add that same line to its `CLAUDE.md`:
+
+```markdown
+Before writing or editing any Dart file, invoke the `flutter-styleguide:styleguide` skill.
+```
+
+Without Claude Code the guide is plain markdown:
+[`plugins/flutter-styleguide/skills/styleguide/`](plugins/flutter-styleguide/skills/styleguide/),
+`SKILL.md` plus eleven topic files.
+
+Update everything with `claude plugin marketplace update`.
