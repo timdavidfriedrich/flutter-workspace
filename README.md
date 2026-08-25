@@ -44,7 +44,7 @@ Three ways, same scripts underneath. Pick one, or mix them.
 | **Claude Code plugin** | `claude plugin marketplace add timdavidfriedrich/flutter-workspace`<br>`claude plugin install flutter-styleguide@flutter-workspace` |
 
 > [!WARNING]
-> Only the Claude Code plugin adds the styleguide. Scaffolding works either way,
+> Only the Claude Code plugin adds the LLM styleguide. Scaffolding works either way,
 > but with curl or `fsg` alone your generated code follows no rules.
 
 ## Create a project
