@@ -5,22 +5,41 @@ Claude Code plugin plus project template for Flutter workspaces:
 `get_it`/`injectable` micro-packages, `dart_mappable`, ARB localization.
 
 
-## Install the styleguide plugin
+## On a new machine
+
+Install FVM and a Flutter SDK — that part cannot come from a repo. Everything
+else is one command:
 
 ```bash
 claude plugin marketplace add timdavidfriedrich/flutter-workspace
 claude plugin install flutter-styleguide@flutter-workspace
 ```
 
-The skill is then `/flutter-styleguide:styleguide`, and Claude loads it on its own
-when a task touches Dart. Update later with `claude plugin marketplace update`.
+That installs three skills:
 
-Add this line to a project's `CLAUDE.md` if you want the trigger to be
-deterministic rather than model-judged (the template already ships it):
+| | |
+|---|---|
+| `/flutter-styleguide:new-project` | scaffold a project, wraps `setup.sh` |
+| `/flutter-styleguide:add-feature <name>` | add a feature package, wraps `add-feature.sh` |
+| `/flutter-styleguide:styleguide` | the coding rules — Claude loads this on its own whenever a task touches Dart |
 
-```markdown
-Before writing or editing any Dart file, invoke the flutter-styleguide skill.
+A session then looks like this:
+
+```text
+/flutter-styleguide:new-project          → asks for name, org and target, then scaffolds
+"build me a settings screen"             → styleguide loads itself, code follows it
+/flutter-styleguide:add-feature scan     → creates and wires packages/feature_scan
+"add a barcode scanner to feature_scan"  → same rules apply
 ```
+
+The scaffolded project ships a `CLAUDE.md` naming the styleguide skill, so the
+trigger inside a project is deterministic rather than model-judged. Nothing else
+lives on the machine: the two scripts and the template are fetched from this repo
+at run time.
+
+Update everything later with `claude plugin marketplace update`. If you had the
+skill installed standalone under `~/.claude/skills/flutter-styleguide/`, delete it
+after installing the plugin — plugin skills are namespaced, so both would show up.
 
 ## Scaffold a project
 
