@@ -11,6 +11,9 @@
 | `RemoteTask` | entity goes over the network | `data/models/` in the data source's package |
 | `task_mappers.dart` | always | `data/mappers/` in the same package |
 
+Data sources go in `data/data_sources/`, repository implementations in
+`data/repositories/`, their interfaces in `domain/repositories/`.
+
 Wire concerns (deviating keys, case style, nullable-everything) stay in the `Remote` model, persistence concerns in the `Local` model.
 
 ## Models & Parsing

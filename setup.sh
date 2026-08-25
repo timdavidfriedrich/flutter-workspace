@@ -166,7 +166,7 @@ add_dev packages/core build_runner injectable_generator
 add packages/shared go_router intl injectable dart_mappable
 add_dev packages/shared build_runner dart_mappable_builder injectable_generator
 
-add packages/feature_home dio flutter_bloc injectable dart_mappable
+add packages/feature_home flutter_bloc injectable dart_mappable
 add_dev packages/feature_home build_runner dart_mappable_builder injectable_generator
 
 # ------------------------------------------------------------------ 6. codegen

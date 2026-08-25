@@ -20,7 +20,12 @@ Strict, acyclic, no exception: `core` ← `shared` ← `features` ← `app`
 3. Knows the features themselves? → app package. Only the DI root and the `GoRoute` tree qualify.
 
 **Two kinds of cuts, never mixed:**
-- `shared` and `features` by **layer**: `data`, `domain`, `presentation`. Create a subfolder only once a file needs it.
+- `shared` and `features` by **layer**, each layer subdivided by kind:
+    - `data/`: `models`, `mappers`, `data_sources`, `repositories`
+    - `domain/`: `repositories`, `use_cases` — plus `entities`, which only ever exists in `shared`
+    - `presentation/`: Blocs, events, states and screens sit directly in it. `extensions` and `widgets` get their own folder in any package that needs them; `localization` and `navigation` exist only in `shared`.
+
+    Create a subfolder only once a file needs it — never an empty one.
 - `core` and app package by **capability**, never by layer — no `core/domain/`:
   - `core`: `config`, `di`, `error`, `network`, `persistence`, `theme`
   - app package: `di`, `navigation`, `theme`
@@ -40,10 +45,10 @@ import 'package:core/error/app_result.dart';
 | `_screen.dart` | screen (route target) | `settings_screen.dart` |
 | `_bloc.dart` / `_event.dart` / `_state.dart` | Bloc, always 3 separate files | `article_list_bloc.dart` |
 | `_cubit.dart` / `_state.dart` | Cubit | `connectivity_cubit.dart` |
-| `_repository.dart` | abstract interface in `domain/` | `article_repository.dart` |
-| `_repository_impl.dart` | repository implementation in `data/` | `article_repository_impl.dart` |
-| `_data_source.dart` / `_data_source_impl.dart` | data source interface / implementation | `remote_data_source.dart` |
-| `_use_case.dart` | use case | `sign_out_use_case.dart` |
+| `_repository.dart` | interface in `domain/repositories/` | `article_repository.dart` |
+| `_repository_impl.dart` | implementation in `data/repositories/` | `article_repository_impl.dart` |
+| `_data_source.dart` / `_data_source_impl.dart` | interface / implementation in `data/data_sources/` | `remote_data_source.dart` |
+| `_use_case.dart` | use case in `domain/use_cases/` | `sign_out_use_case.dart` |
 | `local_` (prefix) | local persistence model in `data/models/` | `local_article.dart` |
 | `remote_` (prefix) | API DTO in `data/models/` | `remote_article.dart` |
 | `_extensions.dart` | extensions | `date_time_extensions.dart` |
@@ -94,7 +99,20 @@ packages/shared/
         │   └── navigation_extensions.dart     context.pushX(...)
         └── widgets/                           reusable components
 
-packages/feature_<name>/lib/{data,domain,presentation}/
+packages/feature_<name>/lib/
+├── di/<name>_module.dart                     @InjectableInit.microPackage()
+├── data/
+│   ├── data_sources/
+│   ├── mappers/
+│   ├── models/                               Local* / Remote*
+│   └── repositories/                         *_repository_impl.dart
+├── domain/
+│   ├── repositories/                         abstract interfaces
+│   └── use_cases/
+└── presentation/
+    ├── extensions/                           feature-only extensions
+    ├── widgets/                              reused inside this feature
+    └── *_bloc.dart / _event.dart / _state.dart / *_screen.dart
 ```
 
 ## Layer Access (strict)

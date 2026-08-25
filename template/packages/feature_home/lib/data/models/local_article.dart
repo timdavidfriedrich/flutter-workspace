@@ -1,10 +1,10 @@
 import 'package:dart_mappable/dart_mappable.dart';
 
-part 'remote_article.mapper.dart';
+part 'local_article.mapper.dart';
 
 @MappableClass()
-class const RemoteArticle({
+class const LocalArticle({
   required final String id,
-  required final String? title,
+  required final String title,
   required final String status,
-}) with RemoteArticleMappable;
+}) with LocalArticleMappable;

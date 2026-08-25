@@ -1,23 +1,23 @@
-import 'package:feature_home/data/models/remote_article.dart';
+import 'package:feature_home/data/models/local_article.dart';
 import 'package:shared/domain/entities/article.dart';
 
 const _statusDraft = "draft";
 const _statusPublished = "published";
 const _statusUnknown = "unknown";
 
-extension RemoteArticleMappers on RemoteArticle {
+extension LocalArticleMappers on LocalArticle {
   Article toArticle() {
     return Article(
       id: id,
-      title: title ?? "",
+      title: title,
       status: status.toArticleStatus(),
     );
   }
 }
 
 extension ArticleMappers on Article {
-  RemoteArticle toRemoteArticle() {
-    return RemoteArticle(
+  LocalArticle toLocalArticle() {
+    return LocalArticle(
       id: id,
       title: title,
       status: status.value,

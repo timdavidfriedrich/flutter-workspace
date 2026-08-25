@@ -10,7 +10,7 @@ Generates a workspace and keeps it wired as it grows:
 lib/                     app package: main.dart, DI root, router, theme
 packages/core/           AppResult, AppError, Spacing, ThemeExtension, Dio, build config
 packages/shared/         ContextExtensions, ARB (en/de), NavigationRoute, entities
-packages/feature_home/   example slice: DTO → mapper → data source → repository → Bloc → screen
+packages/feature_home/   example slice: model → mapper → data source → repository → Bloc → screen
 ```
 
 Stack: `flutter_bloc`, `go_router`, `get_it`/`injectable` micro-packages,
