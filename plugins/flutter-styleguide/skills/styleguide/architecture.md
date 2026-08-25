@@ -23,7 +23,7 @@ Strict, acyclic, no exception: `core` ← `shared` ← `features` ← `app`
 - `shared` and `features` by **layer**, each layer subdivided by kind:
     - `data/`: `models`, `mappers`, `data_sources`, `repositories`
     - `domain/`: `repositories`, `use_cases` — plus `entities`, which only ever exists in `shared`
-    - `presentation/`: Blocs, events, states and screens sit directly in it. `extensions` and `widgets` get their own folder in any package that needs them; `localization` and `navigation` exist only in `shared`.
+    - `presentation/`: one Bloc/event/state/screen unit sits directly in it. From the **second** unit on, every unit gets its own folder named after it — `presentation/home/`, `presentation/article_detail/`. Before splitting, ask whether the second unit is really the same feature; if it has its own repository and no shared state, make it its own `feature_<name>` package instead. `extensions` and `widgets` get their own folder in any package that needs them; `localization` and `navigation` exist only in `shared`.
 
     Create a subfolder only once a file needs it — never an empty one.
 - `core` and app package by **capability**, never by layer — no `core/domain/`:
@@ -112,7 +112,9 @@ packages/feature_<name>/lib/
 └── presentation/
     ├── extensions/                           feature-only extensions
     ├── widgets/                              reused inside this feature
-    └── *_bloc.dart / _event.dart / _state.dart / *_screen.dart
+    ├── <unit>/                               one folder per unit, from the 2nd on
+    │   └── <unit>_{bloc,event,state,screen}.dart
+    └── <unit>_{bloc,event,state,screen}.dart  while there is only one unit
 ```
 
 ## Layer Access (strict)

@@ -1,9 +1,9 @@
-import 'package:feature_home/presentation/article_detail_bloc.dart';
-import 'package:feature_home/presentation/article_detail_event.dart';
-import 'package:feature_home/presentation/article_detail_screen.dart';
-import 'package:feature_home/presentation/home_bloc.dart';
-import 'package:feature_home/presentation/home_event.dart';
-import 'package:feature_home/presentation/home_screen.dart';
+import 'package:feature_home/presentation/article_detail/article_detail_bloc.dart';
+import 'package:feature_home/presentation/article_detail/article_detail_event.dart';
+import 'package:feature_home/presentation/article_detail/article_detail_screen.dart';
+import 'package:feature_home/presentation/home/home_bloc.dart';
+import 'package:feature_home/presentation/home/home_event.dart';
+import 'package:feature_home/presentation/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';

@@ -1,6 +1,6 @@
 import 'package:core/theme/spacing.dart';
-import 'package:feature_home/presentation/article_detail_bloc.dart';
-import 'package:feature_home/presentation/article_detail_state.dart';
+import 'package:feature_home/presentation/article_detail/article_detail_bloc.dart';
+import 'package:feature_home/presentation/article_detail/article_detail_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared/domain/entities/article.dart';

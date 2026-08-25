@@ -1,8 +1,8 @@
 import 'package:core/error/app_error.dart';
 import 'package:core/theme/spacing.dart';
-import 'package:feature_home/presentation/home_bloc.dart';
-import 'package:feature_home/presentation/home_event.dart';
-import 'package:feature_home/presentation/home_state.dart';
+import 'package:feature_home/presentation/home/home_bloc.dart';
+import 'package:feature_home/presentation/home/home_event.dart';
+import 'package:feature_home/presentation/home/home_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared/domain/entities/article.dart';

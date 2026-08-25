@@ -1,7 +1,7 @@
 import 'package:core/error/app_result.dart';
 import 'package:feature_home/domain/repositories/article_repository.dart';
-import 'package:feature_home/presentation/home_event.dart';
-import 'package:feature_home/presentation/home_state.dart';
+import 'package:feature_home/presentation/home/home_event.dart';
+import 'package:feature_home/presentation/home/home_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
